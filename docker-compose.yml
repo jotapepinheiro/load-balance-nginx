@@ -1,0 +1,44 @@
+version: '3'
+
+services: 
+
+    nginx:
+        image: nginx:alpine
+        container_name: nginx
+        ports:
+            - "${NGINX_HTTP_PORT}:80"
+            - "${NGINX_HTTPS_PORT}:443"
+        volumes:
+            - ${NGINX_LOG_PATH}:/var/log/nginx
+            - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+    node1:
+        image: nginx:alpine
+        container_name: node1
+        ports:
+            - "${NGINX_HTTP_PORT}"
+            - "${NGINX_HTTPS_PORT}"
+        volumes:
+            - ./www/node1.html:/usr/share/nginx/html/index.html
+            - ./docker/nginx/node.conf:/etc/nginx/conf.d/default.conf
+
+    node2:
+        image: nginx:alpine
+        container_name: node2
+        ports:
+            - "${NGINX_HTTP_PORT}"
+            - "${NGINX_HTTPS_PORT}"
+        volumes:
+            - ./www/node2.html:/usr/share/nginx/html/index.html
+            - ./docker/nginx/node.conf:/etc/nginx/conf.d/default.conf
+
+    node3:
+        image: nginx:alpine
+        container_name: node3
+        ports:
+            - "${NGINX_HTTP_PORT}"
+            - "${NGINX_HTTPS_PORT}"
+        volumes:
+            - ./www/node3.html:/usr/share/nginx/html/index.html
+            - ./docker/nginx/node.conf:/etc/nginx/conf.d/default.conf
